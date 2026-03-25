@@ -16,11 +16,16 @@ export default function Footer() {
 
   const loadSettings = async () => {
     try {
+      console.log('Loading footer settings from Supabase...');
       const { data, error } = await supabase
         .from('site_settings')
         .select('key, value');
 
-      if (error) throw error;
+      if (error) {
+        console.error('Supabase error loading settings:', error);
+        throw error;
+      }
+      console.log('Footer settings data:', data);
       
       const settingsMap: SiteSettings = {};
       data?.forEach((item) => {

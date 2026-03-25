@@ -24,12 +24,17 @@ export default function AboutUs() {
 
   const loadAboutUs = async () => {
     try {
+      console.log('Loading about us from Supabase...');
       const { data: aboutData, error } = await supabase
         .from('about_us')
         .select('*')
         .maybeSingle();
 
-      if (error) throw error;
+      if (error) {
+        console.error('Supabase error:', error);
+        throw error;
+      }
+      console.log('About us data:', aboutData);
       if (aboutData) {
         setData(aboutData);
       }

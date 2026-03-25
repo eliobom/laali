@@ -20,13 +20,18 @@ export default function Stores() {
 
   const loadStores = async () => {
     try {
+      console.log('Loading stores from Supabase...');
       const { data, error } = await supabase
         .from('stores')
         .select('*')
         .eq('activo', true)
         .order('orden', { ascending: true });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Supabase error loading stores:', error);
+        throw error;
+      }
+      console.log('Stores data:', data);
       if (data) {
         setStores(data);
       }
